@@ -1,6 +1,8 @@
 const grid = document.querySelector(".grid");
 const blockWidth = 100;
 const blockHeight = 20;
+const userStartPosition = [230, 10];
+let currentPosition = userStartPosition;
 
 class Block {
   constructor(xAxis, yAxis) {
@@ -36,8 +38,26 @@ function addBlocks() {
     block.style.left = blocks[i].bottomLeft[0] + "px";
     block.style.bottom = blocks[i].bottomLeft[1] + "px";
     grid.appendChild(block);
-    console.log(blocks[i].bottomLeft);
   }
 }
 
 addBlocks();
+
+const user = document.createElement("div");
+user.classList.add("user");
+drawUser();
+grid.appendChild(user);
+
+function drawUser() {
+  user.style.left = currentPosition[0] + "px";
+  user.style.bottom = currentPosition[1] + "px";
+}
+
+function moveUser(e) {
+  switch (e.key) {
+    case "ArrowLeft":
+      currentPosition[0] -= 10;
+      drawUser();
+      break;
+  }
+}

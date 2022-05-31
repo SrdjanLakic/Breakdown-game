@@ -9,5 +9,12 @@
   position: absolute;
   width: 100px;
   height: 20px;
+  background-image: url(brick.png);
+}
+
+.user {
+  position: absolute;
+  width: 100px;
+  height: 20px;
   background-color: blue;
 }
