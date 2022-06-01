@@ -100,6 +100,20 @@ function moveBall() {
 
 timer = setInterval(moveBall, 30);
 
+function checkForCollisions() {
+  if (
+    ballCurrentPosition[0] >= boardWidth - ballDiameter ||
+    ballCurrentPosition[1] >= boardHeight - ballDiameter ||
+    ballCurrentPosition[0] <= 0
+  ) {
+    changeDirection();
+  }
+  if (ballCurrentPosition[1] <= 0) {
+    clearInterval(timer);
+    score.textContent = 'You lose';
+  }
+}
+
 function changeDirection() {
   if (xDirections === 2 && yDirections === 2) {
     yDirections = -2;
