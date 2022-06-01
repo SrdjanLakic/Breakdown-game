@@ -1,5 +1,5 @@
 const grid = document.querySelector('.grid');
-const score = document.getElementById('score');
+const scoreDisplay = document.getElementById('score');
 const blockWidth = 100;
 const blockHeight = 20;
 const boardWidth = 560;
@@ -8,6 +8,7 @@ const ballDiameter = 20;
 let timer;
 let xDirections = -2;
 let yDirections = 2;
+let score = 0;
 
 const userStartPosition = [230, 10];
 let userCurrentPosition = userStartPosition;
@@ -98,7 +99,7 @@ function moveBall() {
   checkForCollisions();
 }
 
-timer = setInterval(moveBall, 30);
+timer = setInterval(moveBall, 15);
 
 function checkForCollisions() {
   for (let i = 0; i < blocks.length; i++) {
@@ -112,6 +113,13 @@ function checkForCollisions() {
       allBlocks[i].classList.remove('block');
       blocks.splice(i, 1);
       changeDirection();
+      score++;
+      scoreDisplay.textContent = score;
+      if (blocks.length === 0) {
+        scoreDisplay.textContent = 'You WIN 🏆';
+        clearInterval(timer);
+        document.removeEventListener('keydown', moveUser);
+      }
     }
   }
   if (
@@ -121,9 +129,18 @@ function checkForCollisions() {
   ) {
     changeDirection();
   }
+  if (
+    ballCurrentPosition[0] > userCurrentPosition[0] &&
+    ballCurrentPosition[0] < userCurrentPosition[0] + blockWidth &&
+    ballCurrentPosition[1] > userCurrentPosition[1] &&
+    ballCurrentPosition[1] < userCurrentPosition[1] + blockHeight
+  ) {
+    changeDirection();
+  }
+
   if (ballCurrentPosition[1] <= 0) {
     clearInterval(timer);
-    score.textContent = 'You lose';
+    scoreDisplay.textContent = `You lose, your score is ${score}!`;
     document.removeEventListener('keydown', moveUser);
   }
 }
